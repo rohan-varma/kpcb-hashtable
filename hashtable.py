@@ -21,14 +21,19 @@ class HashTable(object):
 				self.li[idx] = (key, value)
 				return True
 			# probing downwards
-			cur_idx = idx + 1
-			while cur_idx != idx and self.li[idx] is not None:
+			print("collision occured!")
+			cur_idx = idx + 1 if idx + 1 < len(self.li) else 0
+			while cur_idx != idx and self.li[cur_idx] is not None:
 				k, v = self.li[idx]
 				if k == key:
 					self.li[idx] = (key, value)
 					return True
 				cur_idx = 0 if cur_idx + 1 == len(self.li) else cur_idx + 1
 			if cur_idx == idx:
+				print("how are we here")
+				print(self.li[cur_idx])
+				print("trying to insert {} {}".format(key, value))
+				print("size of the table {}".format(self.cur_size))
 				return False # we should never get here as we should have returned False in the size check at the beginning
 			self.li[cur_idx] = (key, value)
 			self.cur_size +=1
@@ -41,6 +46,7 @@ class HashTable(object):
 		k, v = self.li[idx]
 		if k == key:
 			return v
+		print("detected collision")
 		cur_idx = idx + 1
 		while cur_idx != idx and self.li[cur_idx] is not None:
 			k, v = self.li[cur_idx]
@@ -59,6 +65,7 @@ class HashTable(object):
 			self.cur_size-=1
 			return v
 		else:
+			print("detected collision")
 			cur_idx = idx + 1
 			while cur_idx != idx and self.li[cur_idx] is not None:
 				k, v = self.li[cur_idx]
@@ -85,6 +92,19 @@ if __name__ == '__main__':
 	assert hash_table.delete(4) == 9
 	assert hash_table.get(4) == None
 	assert hash_table.load() == 0.1
-	print(hash_table.get(5))
+	assert hash_table.set(5, 11)
+	assert hash_table.get(5) == 11
+	assert hash_table.delete(5) == 11
 	# collision tests
+	for j in range(100):
+		print("testing for {} time".format(j + 1))
+		hash_table = HashTable(100)
+		import random
+		for i in range(100):
+			k, v = random.randint(0, 1000), random.randint(0, 10000)
+			assert hash_table.set(k, v)
+			#assert hash_table.set(k, v + 1), i
+
+
+
 
