@@ -85,5 +85,6 @@ if __name__ == '__main__':
 	assert hash_table.delete(4) == 9
 	assert hash_table.get(4) == None
 	assert hash_table.load() == 0.1
+	print(hash_table.get(5))
 	# collision tests
 
