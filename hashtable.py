@@ -39,3 +39,7 @@ class HashTable(object):
 
 	def load():
 		return self.cur_size / len(self.li)
+
+if __name__ == '__main__':
+	# hashmap tests
+	hash_table = HashTable(10)
