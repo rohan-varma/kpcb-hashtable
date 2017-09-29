@@ -20,15 +20,22 @@ class HashTable(object):
 			while self.li[cur_idx] is not None and cur_idx != idx:
 				cur_idx = 0 if cur_idx + 1 == len(self.li) else cur_idx + 1
 			self.li[cur_idx] = value
-			self.cur_size += 1
-
+		
+		self.cur_size += 1
 		return True
 
-	def get(key):
-		pass		
+	def get(self, key):
+		idx = self._hash(key)
+		return self.li[idx]		
 
-	def delete(key):
-		pass
+	def delete(self, key):
+		idx = self._hash(key)
+		if self.li[idx] == None:
+			return None
+		ret = self.li[idx]
+		self.li[idx] = None
+		self.cur_size-=1
+		return ret
 
 	def load():
-		pass
+		return self.cur_size / len(self.li)
